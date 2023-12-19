@@ -1,5 +1,7 @@
 ﻿using ChessGame.board;
 using ChessGame.chess;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Xml;
 
 namespace ChessGame
 {
@@ -7,10 +9,30 @@ namespace ChessGame
     {
         static void Main(string[] args)
         {
-            ChessMatch chessMatch = new ChessMatch();
+            try
+            {
 
-            Screen.printScreen(chessMatch.board);
+                ChessMatch chessMatch = new ChessMatch();
+                
+                while (!chessMatch.finished)
+                {
+                    Console.Clear();
+                    Screen.printScreen(chessMatch.board);
 
+                    Console.Write("Origin: ");
+                    Position origin = Screen.readChessPosition().toPosition();
+                    Console.Write("Target: ");
+                    Position target = Screen.readChessPosition().toPosition();
+
+                    chessMatch.makeMove(origin, target);
+                }
+
+                
+            }
+            catch(BoardException e)
+            {
+                Console.WriteLine(e.Message);
+            }
 
         }
     }

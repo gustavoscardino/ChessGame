@@ -12,6 +12,7 @@ namespace ChessGame.chess
         public Board board { get; private set; }
         private int move;
         public Color currentPlayer;
+        public bool finished { get; private set; }
 
         public ChessMatch()
         {
