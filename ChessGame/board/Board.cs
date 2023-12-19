@@ -2,15 +2,52 @@
 {
     internal class Board
     {
-        public int line { get; set; }
-        public int column { get; set; }
-        public Piece[,] pieces; 
+        public int rows { get; set; }
+        public int columns { get; set; }
+        private Piece[,] pieces; 
 
-        public Board(int line, int column)
+        public Board(int row, int column)
         {
-            this.line = line;
-            this.column = column;
-            pieces = new Piece[line, column];
+            this.rows = row;
+            this.columns = column;
+            pieces = new Piece[row, column];
          }
+
+        public Piece piece(int row, int column)
+        {
+            return pieces[row, column];
+        }
+        public Piece piece(Position position)
+        {
+            return pieces[position.row, position.column];
+        }
+
+        public bool hasPiece(Position position)
+        {
+            checkPosition(position);
+            return piece(position) != null;
+        }
+
+        public void placePiece (Piece p, Position position)
+        {
+            if (hasPiece(position))
+            {
+                throw new BoardException("Position already has a piece!");
+            }
+            pieces[position.row, position.column] = p;
+            p.Position = position;
+        }
+
+        public bool validPosition (Position position)
+        {
+            if (position.row < 0 || position.column < 0 || position.row > rows || position.column > columns)
+                return false;
+            return true;
+        }
+        public void checkPosition (Position position)
+        {
+            if (!validPosition(position))
+                throw new BoardException("Invalid Position!");
+        }
     }
 }
