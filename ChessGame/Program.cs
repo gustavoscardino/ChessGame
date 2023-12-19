@@ -7,11 +7,9 @@ namespace ChessGame
     {
         static void Main(string[] args)
         {
-            Board board = new Board(8, 8);
+            ChessMatch chessMatch = new ChessMatch();
 
-            board.placePiece(new Rook(Color.Preta, board), new Position(5,0));
-
-            Screen.printScreen(board);
+            Screen.printScreen(chessMatch.board);
 
 
         }
