@@ -35,6 +35,26 @@ namespace ChessGame.chess
             {
                 capturedPieces.Add(capturedPiece);
             }
+
+            // kingside castle
+            if (p is King && target.column == origin.column + 2)
+            {
+                Position originR = new Position(origin.row, origin.column + 3);
+                Position targetR = new Position(origin.row, origin.column + 1);
+                Piece R = board.removePiece(originR);
+                R.addNumMoves();
+                board.placePiece(R, targetR);
+            }
+            // queenside castle
+            if (p is King && target.column == origin.column - 2)
+            {
+                Position originR = new Position(origin.row, origin.column - 4);
+                Position targetR = new Position(origin.row, origin.column - 1);
+                Piece R = board.removePiece(originR);
+                R.addNumMoves();
+                board.placePiece(R, targetR);
+            }
+
             return capturedPiece;
         }
 
@@ -48,6 +68,25 @@ namespace ChessGame.chess
                 capturedPieces.Remove(capturedPiece);
             }
             board.placePiece(p, origin);
+
+            // kingside castle
+            if (p is King && target.column == origin.column + 2)
+            {
+                Position originR = new Position(origin.row, origin.column + 3);
+                Position targetR = new Position(origin.row, origin.column + 1);
+                Piece R = board.removePiece(targetR);
+                R.subNumMoves();
+                board.placePiece(R, originR);
+            }
+            // queenside castle
+            if (p is King && target.column == origin.column - 2)
+            {
+                Position originR = new Position(origin.row, origin.column - 4);
+                Position targetR = new Position(origin.row, origin.column - 1);
+                Piece R = board.removePiece(targetR);
+                R.subNumMoves();
+                board.placePiece(R, originR);
+            }
         }
 
         public void makePlay(Position origin, Position target)
@@ -192,9 +231,9 @@ namespace ChessGame.chess
             placeNewPiece('b', 1, new Knight(Color.White, board));
             placeNewPiece('c', 1, new Bishop(Color.White, board));
             placeNewPiece('d', 1, new Queen(Color.White, board));
-            placeNewPiece('e', 1, new King(Color.White, board));
-            placeNewPiece('f', 1, new Bishop(Color.White, board));
-            placeNewPiece('g', 1, new Knight(Color.White, board));
+            placeNewPiece('e', 1, new King(Color.White, board, this));
+            //placeNewPiece('f', 1, new Bishop(Color.White, board));
+            //placeNewPiece('g', 1, new Knight(Color.White, board));
             placeNewPiece('h', 1, new Rook(Color.White, board));
             placeNewPiece('a', 2, new Pawn(Color.White, board, this));
             placeNewPiece('b', 2, new Pawn(Color.White, board, this));
@@ -209,7 +248,7 @@ namespace ChessGame.chess
             placeNewPiece('b', 8, new Knight(Color.Black, board));
             placeNewPiece('c', 8, new Bishop(Color.Black, board));
             placeNewPiece('d', 8, new Queen(Color.Black, board));
-            placeNewPiece('e', 8, new King(Color.Black, board));
+            placeNewPiece('e', 8, new King(Color.Black, board, this));
             placeNewPiece('f', 8, new Bishop(Color.Black, board));
             placeNewPiece('g', 8, new Knight(Color.Black, board));
             placeNewPiece('h', 8, new Rook(Color.Black, board));
