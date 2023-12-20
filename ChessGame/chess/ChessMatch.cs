@@ -138,6 +138,21 @@ namespace ChessGame.chess
                 undoMove(origin, target, capturedPiece);
                 throw new BoardException("You cannot place yourself in check!");
             }
+
+            Piece p1 = board.piece(target);
+            // Promotion
+            if (p1 is Pawn)
+            {
+                if ((p1.color == Color.White && target.row == 0) || (p1.color == Color.Black && target.row == 7))
+                {
+                    p1 = board.removePiece(target);
+                    pieces.Remove(p1);
+                    Piece queen = new Queen(p1.color, board);
+                    board.placePiece(queen, target);
+                    pieces.Add( queen );
+                } 
+            }
+
             if (isInCheck(opponent(currentPlayer)))
                 check = true;
             else
@@ -307,8 +322,6 @@ namespace ChessGame.chess
             placeNewPiece('f', 7, new Pawn(Color.Black, board, this));
             placeNewPiece('g', 7, new Pawn(Color.Black, board, this));
             placeNewPiece('h', 7, new Pawn(Color.Black, board, this));
-
-
         }
     }
 }
