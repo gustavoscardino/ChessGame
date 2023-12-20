@@ -5,7 +5,7 @@ namespace ChessGame.chess
 {
     public class Rook : Piece
     {
-        public PieceType Type { get; }
+        public override PieceType Type { get; }
         public Rook(Color color, Board board) : base(color, board)
         {
             Type = PieceType.Rook;

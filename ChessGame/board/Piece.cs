@@ -1,4 +1,6 @@
-﻿namespace ChessGame.board
+﻿using ChessGame.chess;
+
+namespace ChessGame.board
 {
     public abstract class Piece
     {
@@ -6,6 +8,7 @@
         public Color color { get; protected set; }
         public int numMoves { get; protected set; }
         public Board board { get; protected set; }
+        public virtual PieceType Type { get;}
 
         public Piece(Color color, Board board)
         {

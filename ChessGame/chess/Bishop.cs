@@ -5,7 +5,7 @@ namespace ChessGame.chess
 {
     public class Bishop : Piece
     {
-        public PieceType Type { get; }
+        public override PieceType Type { get; }
         public Bishop(Color color, Board board) : base(color, board)
         {
             Type = PieceType.Bishop;

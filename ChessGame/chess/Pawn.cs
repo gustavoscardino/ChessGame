@@ -6,7 +6,7 @@ namespace ChessGame.chess
     public class Pawn : Piece
     {
         private ChessMatch match;
-        public PieceType Type { get; }
+        public override PieceType Type { get; }
         public Pawn(Color color, Board board, ChessMatch match) : base(color, board)
         {
             this.match = match;
