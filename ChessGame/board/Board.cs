@@ -1,6 +1,6 @@
 ﻿namespace ChessGame.board
 {
-    internal class Board
+    public class Board
     {
         public int rows { get; set; }
         public int columns { get; set; }

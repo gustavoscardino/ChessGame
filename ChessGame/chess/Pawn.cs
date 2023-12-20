@@ -3,12 +3,14 @@ using System.Runtime.ConstrainedExecution;
 
 namespace ChessGame.chess
 {
-    internal class Pawn : Piece
+    public class Pawn : Piece
     {
         private ChessMatch match;
+        public PieceType Type { get; }
         public Pawn(Color color, Board board, ChessMatch match) : base(color, board)
         {
             this.match = match;
+            Type = PieceType.Pawn;
         }
 
         public override string ToString()

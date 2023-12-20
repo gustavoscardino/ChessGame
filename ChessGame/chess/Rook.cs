@@ -3,10 +3,12 @@ using System.Runtime.ConstrainedExecution;
 
 namespace ChessGame.chess
 {
-    internal class Rook : Piece
+    public class Rook : Piece
     {
+        public PieceType Type { get; }
         public Rook(Color color, Board board) : base(color, board)
         {
+            Type = PieceType.Rook;
         }
 
         public override string ToString()

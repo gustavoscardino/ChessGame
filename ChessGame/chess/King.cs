@@ -2,12 +2,14 @@
 
 namespace ChessGame.chess
 {
-    internal class King : Piece
+    public class King : Piece
     {
         private ChessMatch match;
+        public PieceType Type { get; }
         public King(Color color, Board board, ChessMatch match) : base(color, board)
         {
             this.match = match;
+            Type = PieceType.King;
         }
 
         public override string ToString()

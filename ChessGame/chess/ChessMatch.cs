@@ -4,7 +4,7 @@ using System.Runtime.ConstrainedExecution;
 
 namespace ChessGame.chess
 {
-    internal class ChessMatch
+    public class ChessMatch
     {
         public Board board { get; private set; }
         public int move { get; private set; }
@@ -219,13 +219,12 @@ namespace ChessGame.chess
             return aux;
         }
 
-        private Color opponent(Color color)
+        public static Color opponent(Color color) => color switch
         {
-            if (color == Color.White)
-                return Color.Black;
-            else
-                return Color.White;
-        }
+            Color.Black => Color.White,
+            Color.White => Color.Black,
+            _ => Color.None,
+        };
 
         private Piece king(Color color)
         {
