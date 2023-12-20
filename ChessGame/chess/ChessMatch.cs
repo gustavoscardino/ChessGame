@@ -1,5 +1,6 @@
 ﻿using ChessGame.board;
 using System.Collections.Generic;
+using System.Runtime.ConstrainedExecution;
 
 namespace ChessGame.chess
 {
@@ -61,8 +62,13 @@ namespace ChessGame.chess
                 check = true;
             else
                 check = false;
-            move++;
-            changePlayer();
+            if (testCheckmate(opponent(currentPlayer)))
+                finished = true;
+            else
+            {
+                move++;
+                changePlayer();
+            }
         }
 
         public void checkOriginPosition(Position origin)
@@ -144,6 +150,35 @@ namespace ChessGame.chess
                 }
             }
             return false;
+        }
+
+        public bool testCheckmate(Color color)
+        {
+            if (!isInCheck(color))
+                return false;
+            foreach (Piece x in inGamePiecesSet((Color)color))
+            {
+                bool[,] mat = x.possibleMoves();
+                for (int i = 0; i < board.rows; i++)
+                {
+                    for (int j = 0; j < board.columns; j++)
+                    {
+                        if (mat[i, j])
+                        {
+                            Position origin= x.position;
+                            Position target = new Position(i, j);
+                            Piece capturedPiece = makeMove(origin, target);
+                            bool testCheck = isInCheck(color);
+                            undoMove(origin, target, capturedPiece);
+                            if (!testCheck)
+                            {
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+            return true;
         }
 
         public void placeNewPiece(char column, int row, Piece piece)

@@ -10,9 +10,6 @@ namespace ChessGame
     {
         static void Main(string[] args)
         {
-            try
-            {
-
                 ChessMatch chessMatch = new ChessMatch();
 
                 while (!chessMatch.finished)
@@ -44,12 +41,8 @@ namespace ChessGame
                     }
                 }
 
-                
-            }
-            catch(BoardException e)
-            {
-                Console.WriteLine(e.Message);
-            }
+                Console.Clear();
+                Screen.printMatch(chessMatch);
 
         }
     }
