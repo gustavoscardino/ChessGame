@@ -23,18 +23,19 @@ namespace ChessGame
 
                         Console.Write("\nOrigin: ");
                         Position origin = Screen.readChessPosition().toPosition();
+                        chessMatch.checkOriginPosition(origin);
 
                         bool[,] possibleMoves = chessMatch.board.piece(origin).possibleMoves();
 
                         Console.Clear();
                         Screen.printScreen(chessMatch.board, possibleMoves);
 
-                        Console.Write("\nTarget: ");
+                        Console.Write("\nTarget: "); 
                         Position target = Screen.readChessPosition().toPosition();
-
+                        chessMatch.checkTargetPosition(origin, target);
                         chessMatch.makeMove(origin, target);
                     }
-                    catch(Exception e)
+                    catch(BoardException e)
                     {
                         Console.WriteLine(e.Message);
                         Console.ReadLine();

@@ -10,7 +10,7 @@ namespace ChessGame.chess
     internal class ChessMatch
     {
         public Board board { get; private set; }
-        private int move;
+        public int move { get; private set; }
         public Color currentPlayer;
         public bool finished { get; private set; }
 
@@ -28,6 +28,40 @@ namespace ChessGame.chess
             p.addNumMoves();
             Piece capturedPiece = board.removePiece(target);
             board.placePiece(p, target);
+        }
+
+        public void makePlay(Position origin, Position target)
+        {
+            makeMove(origin, target);
+            move++;
+            changePlayer();
+        }
+
+        public void checkOriginPosition(Position origin)
+        {
+            board.checkPosition(origin);
+            if (board.piece(origin) == null)
+                throw new BoardException("There is no Piece at the chosen position!");
+            if (currentPlayer != board.piece(origin).color)
+                throw new BoardException("The chosen piece is not yours!");
+            if (!board.piece(origin).hasPossibleMoves())
+                throw new BoardException("There is no possible moves for the chosen piece!");
+
+        }
+
+        public void checkTargetPosition (Position origin,  Position target)
+        {
+            board.checkPosition(target);
+            if (!board.piece(origin).canMoveTo(target))
+                throw new BoardException("Invalid Position!");
+        }
+
+        private void changePlayer()
+        {
+            if (currentPlayer == Color.White) 
+                currentPlayer = Color.Black;
+            else
+                currentPlayer = Color.White;
         }
         private void placePieces()
         {
