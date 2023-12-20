@@ -22,7 +22,6 @@ namespace ChessGame.chess
         public override bool[,] possibleMoves()
         {
             bool[,] mat = new bool[board.rows, board.columns];
-
             Position pos = new Position(0, 0);
 
             //north
@@ -38,7 +37,7 @@ namespace ChessGame.chess
             if (board.validPosition(pos) && canMove(pos))
                 mat[pos.row, pos.column] = true;
             //se
-            pos.setValues(position.row - 1, position.column + 1);
+            pos.setValues(position.row + 1, position.column + 1);
             if (board.validPosition(pos) && canMove(pos))
                 mat[pos.row, pos.column] = true;
             //south
@@ -58,7 +57,7 @@ namespace ChessGame.chess
             if (board.validPosition(pos) && canMove(pos))
                 mat[pos.row, pos.column] = true;
             
-
+            return mat;
         }
     }
 }

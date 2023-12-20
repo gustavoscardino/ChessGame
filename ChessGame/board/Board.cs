@@ -35,7 +35,7 @@
                 throw new BoardException("Position already has a piece!");
             }
             pieces[position.row, position.column] = p;
-            p.Position = position;
+            p.position = position;
         }
 
         public Piece removePiece(Position position)
@@ -43,14 +43,14 @@
             if (!hasPiece(position))
                 return null;
             Piece aux = piece(position);
-            aux.Position = null;
+            aux.position = null;
             pieces[position.row, position.column] = null;
             return aux;
         }
 
         public bool validPosition (Position position)
         {
-            if (position.row < 0 || position.column < 0 || position.row > rows || position.column > columns)
+            if (position.row < 0 || position.column < 0 || position.row >= rows || position.column >= columns)
                 return false;
             return true;
         }

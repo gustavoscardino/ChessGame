@@ -13,18 +13,32 @@ namespace ChessGame
             {
 
                 ChessMatch chessMatch = new ChessMatch();
-                
+
                 while (!chessMatch.finished)
                 {
-                    Console.Clear();
-                    Screen.printScreen(chessMatch.board);
+                    try
+                    {
+                        Console.Clear();
+                        Screen.printScreen(chessMatch.board);
 
-                    Console.Write("Origin: ");
-                    Position origin = Screen.readChessPosition().toPosition();
-                    Console.Write("Target: ");
-                    Position target = Screen.readChessPosition().toPosition();
+                        Console.Write("\nOrigin: ");
+                        Position origin = Screen.readChessPosition().toPosition();
 
-                    chessMatch.makeMove(origin, target);
+                        bool[,] possibleMoves = chessMatch.board.piece(origin).possibleMoves();
+
+                        Console.Clear();
+                        Screen.printScreen(chessMatch.board, possibleMoves);
+
+                        Console.Write("\nTarget: ");
+                        Position target = Screen.readChessPosition().toPosition();
+
+                        chessMatch.makeMove(origin, target);
+                    }
+                    catch(Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                        Console.ReadLine();
+                    }
                 }
 
                 
