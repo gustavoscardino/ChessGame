@@ -1,6 +1,7 @@
 ﻿using ChessGame.board;
 using ChessGame.chess;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.RegularExpressions;
 using System.Xml;
 
 namespace ChessGame
@@ -19,7 +20,7 @@ namespace ChessGame
                     try
                     {
                         Console.Clear();
-                        Screen.printScreen(chessMatch.board);
+                        Screen.printMatch(chessMatch);
 
                         Console.Write("\nOrigin: ");
                         Position origin = Screen.readChessPosition().toPosition();
@@ -33,7 +34,8 @@ namespace ChessGame
                         Console.Write("\nTarget: "); 
                         Position target = Screen.readChessPosition().toPosition();
                         chessMatch.checkTargetPosition(origin, target);
-                        chessMatch.makeMove(origin, target);
+
+                        chessMatch.makePlay(origin, target);
                     }
                     catch(BoardException e)
                     {

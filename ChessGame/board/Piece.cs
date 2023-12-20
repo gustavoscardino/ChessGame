@@ -19,6 +19,10 @@
         {
             numMoves++;
         }
+        public void subNumMoves()
+        {
+            numMoves--;
+        }
 
         public bool hasPossibleMoves()
         {

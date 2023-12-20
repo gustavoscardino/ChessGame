@@ -5,6 +5,48 @@ namespace ChessGame
 {
     internal class Screen
     {
+        public static void printMatch(ChessMatch match)
+        {
+            printScreen(match.board);
+            Console.WriteLine();
+            printCapturedPieces(match);
+            Console.WriteLine("\nMove: " + match.move);
+            if (!match.finished)
+            {
+                Console.WriteLine("Aguardando jogada: " + match.currentPlayer);
+                if (match.check)
+                {
+                    Console.WriteLine("CHECK!");
+                }
+            }
+            else
+            {
+                Console.WriteLine("CHECKMATE!");
+                Console.WriteLine("Winner: " + match.currentPlayer);
+            }
+        }
+
+        public static void printCapturedPieces(ChessMatch match)
+        {
+            Console.WriteLine("Captured Pieces: ");
+            Console.WriteLine("Whites: ");
+            printSet(match.capturedPiecesSet(Color.White));
+            Console.WriteLine("Blacks: ");
+            ConsoleColor aux = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            printSet(match.capturedPiecesSet(Color.Black));
+            Console.ForegroundColor = aux;
+        }
+
+        public static void printSet(HashSet<Piece> pieces)
+        {
+            Console.Write("[");
+            foreach(Piece x in pieces)
+            {
+                Console.Write(x + " ");
+            }
+            Console.WriteLine("]");
+        }
         public static void printScreen(Board board)
         {
             for (int i = 0; i < board.rows; i++)
