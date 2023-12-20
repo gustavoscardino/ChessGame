@@ -63,20 +63,20 @@ namespace ChessGame.chess
                     mat[pos.row, pos.column] = true;
                 }
 
-                //// en passant
-                //if (position.row == 3)
-                //{
-                //    Position esquerda = new Position(position.row, position.column - 1);
-                //    if (board.validPosition(esquerda) && hasEnemy(esquerda) && board.piece(esquerda) == match.vulneravelEnPassant)
-                //    {
-                //        mat[esquerda.row - 1, esquerda.column] = true;
-                //    }
-                //    Position direita = new Position(position.row, position.column + 1);
-                //    if (board.validPosition(direita) && hasEnemy(direita) && board.piece(direita) == match.vulneravelEnPassant)
-                //    {
-                //        mat[direita.row - 1, direita.column] = true;
-                //    }
-                //}
+                // en passant
+                if (position.row == 3)
+                {
+                    Position left = new Position(position.row, position.column - 1);
+                    if (board.validPosition(left) && hasEnemy(left) && board.piece(left) == match.enPassantVulnerable)
+                    {
+                        mat[left.row - 1, left.column] = true;
+                    }
+                    Position right = new Position(position.row, position.column + 1);
+                    if (board.validPosition(right) && hasEnemy(right) && board.piece(right) == match.enPassantVulnerable)
+                    {
+                        mat[right.row - 1, right.column] = true;
+                    }
+                }
             }
             else
             {
@@ -102,20 +102,20 @@ namespace ChessGame.chess
                     mat[pos.row, pos.column] = true;
                 }
 
-                ////  en passant
-                //if (position.row == 4)
-                //{
-                //    Position esquerda = new Position(position.row, position.column - 1);
-                //    if (board.validPosition(esquerda) && hasEnemy(esquerda) && board.piece(esquerda) == match.vulneravelEnPassant)
-                //    {
-                //        mat[esquerda.row + 1, esquerda.column] = true;
-                //    }
-                //    Position direita = new Position(position.row, position.column + 1);
-                //    if (board.validPosition(direita) && hasEnemy(direita) && board.piece(direita) == match.vulneravelEnPassant)
-                //    {
-                //        mat[direita.row + 1, direita.column] = true;
-                //    }
-                //}
+                //  en passant
+                if (position.row == 4)
+                {
+                    Position left = new Position(position.row, position.column - 1);
+                    if (board.validPosition(left) && hasEnemy(left) && board.piece(left) == match.enPassantVulnerable)
+                    {
+                        mat[left.row + 1, left.column] = true;
+                    }
+                    Position right = new Position(position.row, position.column + 1);
+                    if (board.validPosition(right) && hasEnemy(right) && board.piece(right) == match.enPassantVulnerable)
+                    {
+                        mat[right.row + 1, right.column] = true;
+                    }
+                }
             }
 
             return mat;

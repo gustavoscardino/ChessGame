@@ -13,6 +13,7 @@ namespace ChessGame.chess
         private HashSet<Piece> pieces;
         private HashSet<Piece> capturedPieces;
         public bool check { get; private set; }
+        public Piece enPassantVulnerable { get; private set; }
 
         public ChessMatch()
         {
@@ -55,6 +56,26 @@ namespace ChessGame.chess
                 board.placePiece(R, targetR);
             }
 
+
+            // en passant
+            if (p is Pawn)
+            {
+                if (origin.column != target.column && capturedPiece == null)
+                {
+                    Position posP;
+                    if (p.color == Color.White)
+                    {
+                        posP = new Position(target.row + 1, target.column);
+                    }
+                    else
+                    {
+                        posP = new Position(target.row - 1, target.column);
+                    }
+                    capturedPiece = board.removePiece(posP);
+                    capturedPieces.Add(capturedPiece);
+                }
+            }
+
             return capturedPiece;
         }
 
@@ -87,6 +108,26 @@ namespace ChessGame.chess
                 R.subNumMoves();
                 board.placePiece(R, originR);
             }
+
+            // en passant
+            if (p is Pawn)
+            {
+                if(origin.column != target.column && capturedPiece == enPassantVulnerable)
+                {
+                    Piece pawn = board.removePiece(target);
+                    Position posP;
+                    if (p.color == Color.White)
+                    {
+                        posP = new Position(3, target.column);
+                    }
+                    else
+                    {
+                        posP = new Position(4, target.column);
+                    }
+                    board.placePiece(pawn, posP);
+                }
+            }
+
         }
 
         public void makePlay(Position origin, Position target)
@@ -108,6 +149,12 @@ namespace ChessGame.chess
                 move++;
                 changePlayer();
             }
+
+            Piece p = board.piece(target);
+            if (p is Pawn && (target.row == origin.row - 2 || target.row == origin.row + 2))
+                enPassantVulnerable = p;
+            else
+                enPassantVulnerable = null;
         }
 
         public void checkOriginPosition(Position origin)
@@ -232,8 +279,8 @@ namespace ChessGame.chess
             placeNewPiece('c', 1, new Bishop(Color.White, board));
             placeNewPiece('d', 1, new Queen(Color.White, board));
             placeNewPiece('e', 1, new King(Color.White, board, this));
-            //placeNewPiece('f', 1, new Bishop(Color.White, board));
-            //placeNewPiece('g', 1, new Knight(Color.White, board));
+            placeNewPiece('f', 1, new Bishop(Color.White, board));
+            placeNewPiece('g', 1, new Knight(Color.White, board));
             placeNewPiece('h', 1, new Rook(Color.White, board));
             placeNewPiece('a', 2, new Pawn(Color.White, board, this));
             placeNewPiece('b', 2, new Pawn(Color.White, board, this));
