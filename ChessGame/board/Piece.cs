@@ -1,4 +1,5 @@
-﻿using ChessGame.chess;
+﻿using ChessGame.board;
+using ChessGame.chess;
 
 namespace ChessGame.board
 {
@@ -43,5 +44,22 @@ namespace ChessGame.board
         }
 
         public abstract bool[,] possibleMoves();
+
+        public bool[,] TestPossibleMoves(ChessMatch match)
+        {
+            Position origin = this.position;
+            bool[,] mat = possibleMoves();
+            for (int i = 0; i < 8 ; i++)
+                for (int j = 0; j < 8 ; j++)
+                    if (mat[i, j])
+                    {
+                        Position target = new Position(i, j);
+                        Piece capturedPiece = match.makeMove(origin, target);
+                        if (match.isInCheck(match.currentPlayer))
+                            mat[i, j] = false;
+                        match.undoMove(origin, target, capturedPiece);
+                    }
+            return mat;
+        }
     }
 }

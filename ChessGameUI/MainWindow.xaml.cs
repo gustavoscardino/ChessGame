@@ -101,7 +101,7 @@ namespace ChessGameUI
             
             HideHighLights(selectedPos);
 
-            if (chessMatch.board.piece(selectedPos).possibleMoves()[target.row, target.column])
+            if (chessMatch.board.piece(selectedPos). TestPossibleMoves(chessMatch)[target.row, target.column])
                 HandleMove(selectedPos, target);
 
             selectedPos = null;
@@ -119,7 +119,7 @@ namespace ChessGameUI
         {
             System.Windows.Media.Color color = System.Windows.Media.Color.FromArgb(128, 144, 238, 144);
 
-            bool[,] possibleMoves = chessMatch.board.piece(origin).possibleMoves();
+            bool[,] possibleMoves = chessMatch.board.piece(origin). TestPossibleMoves(chessMatch);
 
             for (int i = 0; i < 8; i++)
             {
@@ -134,7 +134,7 @@ namespace ChessGameUI
         private void HideHighLights(Position origin)
         {
 
-            bool[,] possibleMoves = chessMatch.board.piece(origin).possibleMoves();
+            bool[,] possibleMoves = chessMatch.board.piece(origin). TestPossibleMoves(chessMatch);
 
             for (int i = 0; i < 8; i++)
             {

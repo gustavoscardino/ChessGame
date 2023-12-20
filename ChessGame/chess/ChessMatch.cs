@@ -136,7 +136,8 @@ namespace ChessGame.chess
             if (isInCheck(currentPlayer))
             {
                 undoMove(origin, target, capturedPiece);
-                throw new BoardException("You cannot place yourself in check!");
+                return;
+                //throw new BoardException("You cannot place yourself in check!");
             }
 
             Piece p1 = board.piece(target);
