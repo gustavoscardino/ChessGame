@@ -34,7 +34,7 @@
             return false;
         }
 
-        public bool canMoveTo(Position position)
+        public bool possibleMove(Position position)
         {
             return possibleMoves()[position.row, position.column];
         }

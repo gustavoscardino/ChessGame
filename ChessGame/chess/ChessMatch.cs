@@ -86,7 +86,7 @@ namespace ChessGame.chess
         public void checkTargetPosition(Position origin, Position target)
         {
             board.checkPosition(target);
-            if (!board.piece(origin).canMoveTo(target))
+            if (!board.piece(origin).possibleMove(target))
                 throw new BoardException("Invalid Position!");
         }
 
