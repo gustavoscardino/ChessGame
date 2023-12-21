@@ -12,7 +12,7 @@ namespace ChessGame
         {
                 ChessMatch chessMatch = new ChessMatch();
 
-                while (!chessMatch.finished)
+                while (chessMatch.result == null)
                 {
                     try
                     {

@@ -67,6 +67,11 @@ namespace ChessGameUI
 
         private void BoardGrid_MouseDown(object sender, MouseButtonEventArgs e)
         {
+            if (isMenuOnScreen())
+            {
+                return;
+            }
+
             Point point = e.GetPosition(BoardGrid);
             Position pos = ToSquarePosition(point);
 
@@ -89,7 +94,7 @@ namespace ChessGameUI
 
         private void OnFromPositionSelected(Position pos)
         {
-            if (chessMatch.board.piece(pos).hasPossibleMoves())
+            if (chessMatch.board.piece(pos).hasPossibleMoves(chessMatch))
             {
                 selectedPos = pos;
                 ShowHighLights(pos);
@@ -112,6 +117,11 @@ namespace ChessGameUI
             chessMatch.makePlay(pos, target);
             DrawBoard(chessMatch.board);
             SetCursor(chessMatch.currentPlayer);
+
+            if (chessMatch.IsGameOver())
+            {
+                ShowGameOver();
+            }
         }
 
 
@@ -145,6 +155,18 @@ namespace ChessGameUI
                 }
             }
         }
+        private void HideAllHighLights()
+        {
+
+
+            for (int i = 0; i < 8; i++)
+            {
+                for (int j = 0; j < 8; j++)
+                {                    
+                    highlights[i, j].Fill = Brushes.Transparent;
+                }
+            }
+        }
 
         private void SetCursor(ChessGame.board.Color color)
         {
@@ -152,6 +174,61 @@ namespace ChessGameUI
                 Cursor = ChessCursors.WhiteCursor;
             else
                 Cursor = ChessCursors.BlackCursor;
+        }
+
+        private bool isMenuOnScreen()
+        {
+            return MenuContainer.Content != null;
+        }
+
+        private void ShowGameOver()
+        {
+            GameOverMenu gameOverMenu = new GameOverMenu(chessMatch);
+            MenuContainer.Content = gameOverMenu;
+
+            gameOverMenu.OptionSelected += option =>
+            {
+                if (option == Option.Restart)
+                {
+                    MenuContainer.Content = null;
+                    RestartGame();
+                }
+                else
+                {
+                    Application.Current.Shutdown();
+                }
+            };
+        }
+
+        private void RestartGame()
+        {
+            HideAllHighLights();
+            selectedPos = null;
+            chessMatch = new ChessMatch();
+            DrawBoard(chessMatch.board);
+            SetCursor(chessMatch.currentPlayer);
+        }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (!isMenuOnScreen() && e.Key == Key.Escape)
+            {
+                ShowPauseMenu();
+            }
+        }
+        private void ShowPauseMenu()
+        {
+            PauseMenu pauseMenu = new PauseMenu();
+            MenuContainer.Content = pauseMenu;
+
+            pauseMenu.OptionSelected += option =>
+            {
+                MenuContainer.Content = null;
+                if (option == Option.Restart)
+                {
+                    RestartGame();
+                }
+            };
         }
     }
 }

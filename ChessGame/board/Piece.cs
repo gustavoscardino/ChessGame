@@ -28,9 +28,9 @@ namespace ChessGame.board
             numMoves--;
         }
 
-        public bool hasPossibleMoves()
+        public bool hasPossibleMoves(ChessMatch match)
         {
-            bool[,] mat = possibleMoves();
+            bool[,] mat = TestPossibleMoves(match);
             for (int i = 0; i < board.rows; i++)
                 for (int j = 0; j < board.columns; j++)
                     if (mat[i, j])
@@ -38,9 +38,9 @@ namespace ChessGame.board
             return false;
         }
 
-        public bool possibleMove(Position position)
+        public bool possibleMove(Position position, ChessMatch match)
         {
-            return possibleMoves()[position.row, position.column];
+            return TestPossibleMoves(match)[position.row, position.column];
         }
 
         public abstract bool[,] possibleMoves();
@@ -55,7 +55,7 @@ namespace ChessGame.board
                     {
                         Position target = new Position(i, j);
                         Piece capturedPiece = match.makeMove(origin, target);
-                        if (match.isInCheck(match.currentPlayer))
+                        if (match.isInCheck(color))
                             mat[i, j] = false;
                         match.undoMove(origin, target, capturedPiece);
                     }

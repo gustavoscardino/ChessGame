@@ -11,7 +11,7 @@ namespace ChessGame
             Console.WriteLine();
             printCapturedPieces(match);
             Console.WriteLine("\nMove: " + match.move);
-            if (!match.finished)
+            if (match.result == null)
             {
                 Console.WriteLine("Aguardando jogada: " + match.currentPlayer);
                 if (match.check)
@@ -94,7 +94,7 @@ namespace ChessGame
                 int row = int.Parse(s[1] + "");
                 return new ChessPosition(column, row);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 throw new BoardException("Invalid Position!");
             }

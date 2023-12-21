@@ -9,11 +9,11 @@ namespace ChessGame.chess
         public Board board { get; private set; }
         public int move { get; private set; }
         public Color currentPlayer;
-        public bool finished { get; private set; }
         private HashSet<Piece> pieces;
         private HashSet<Piece> capturedPieces;
         public bool check { get; private set; }
         public Piece enPassantVulnerable { get; private set; }
+        public Result result { get; private set; }
 
         public ChessMatch()
         {
@@ -112,7 +112,7 @@ namespace ChessGame.chess
             // en passant
             if (p is Pawn)
             {
-                if(origin.column != target.column && capturedPiece == enPassantVulnerable)
+                if (origin.column != target.column && capturedPiece == enPassantVulnerable)
                 {
                     Piece pawn = board.removePiece(target);
                     Position posP;
@@ -150,27 +150,46 @@ namespace ChessGame.chess
                     pieces.Remove(p1);
                     Piece queen = new Queen(p1.color, board);
                     board.placePiece(queen, target);
-                    pieces.Add( queen );
-                } 
-            }
-
-            if (isInCheck(opponent(currentPlayer)))
-                check = true;
-            else
-                check = false;
-            if (testCheckmate(opponent(currentPlayer)))
-                finished = true;
-            else
-            {
-                move++;
-                changePlayer();
+                    pieces.Add(queen);
+                }
             }
 
             Piece p = board.piece(target);
+            // en passant
             if (p is Pawn && (target.row == origin.row - 2 || target.row == origin.row + 2))
                 enPassantVulnerable = p;
             else
                 enPassantVulnerable = null;
+
+            CheckForGameOver();
+
+
+        }
+
+        private void CheckForGameOver()
+        {
+            if (isInCheck(opponent(currentPlayer)))
+            {
+                check = true;
+                if (testCheckmate(opponent(currentPlayer)))
+                {
+                    result = Result.Win(currentPlayer);
+                }
+            }
+            else
+            {
+                if (TestStalemate(opponent(currentPlayer)))
+                {
+                    result = Result.Draw(EndReason.Stalemate);
+                }
+                check = false;
+            }
+
+            if (result == null)
+            {
+                move++;
+                changePlayer();
+            }
         }
 
         public void checkOriginPosition(Position origin)
@@ -180,7 +199,7 @@ namespace ChessGame.chess
                 throw new BoardException("There is no Piece at the chosen position!");
             if (currentPlayer != board.piece(origin).color)
                 throw new BoardException("The chosen piece is not yours!");
-            if (!board.piece(origin).hasPossibleMoves())
+            if (!board.piece(origin).hasPossibleMoves(this))
                 throw new BoardException("There is no possible moves for the chosen piece!");
 
         }
@@ -188,7 +207,7 @@ namespace ChessGame.chess
         public void checkTargetPosition(Position origin, Position target)
         {
             board.checkPosition(target);
-            if (!board.piece(origin).possibleMove(target))
+            if (!board.piece(origin).possibleMove(target, this))
                 throw new BoardException("Invalid Position!");
         }
 
@@ -257,7 +276,7 @@ namespace ChessGame.chess
         {
             if (!isInCheck(color))
                 return false;
-            foreach (Piece x in inGamePiecesSet((Color)color))
+            foreach (Piece x in inGamePiecesSet(color))
             {
                 bool[,] mat = x.possibleMoves();
                 for (int i = 0; i < board.rows; i++)
@@ -266,7 +285,7 @@ namespace ChessGame.chess
                     {
                         if (mat[i, j])
                         {
-                            Position origin= x.position;
+                            Position origin = x.position;
                             Position target = new Position(i, j);
                             Piece capturedPiece = makeMove(origin, target);
                             bool testCheck = isInCheck(color);
@@ -280,6 +299,23 @@ namespace ChessGame.chess
                 }
             }
             return true;
+        }
+
+        public bool TestStalemate(Color color)
+        {
+            if (isInCheck(color))
+                return false;
+            foreach (Piece p in inGamePiecesSet(color))
+            {
+                if (p.hasPossibleMoves(this))
+                    return false;
+            }
+            return true;
+        }
+
+        public bool IsGameOver()
+        {
+            return result != null;
         }
 
         public void placeNewPiece(char column, int row, Piece piece)
