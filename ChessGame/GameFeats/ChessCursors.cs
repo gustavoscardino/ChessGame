@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Input;
 
-namespace ChessGame
+namespace ChessGame.GameFeats
 {
     public static class ChessCursors
     {

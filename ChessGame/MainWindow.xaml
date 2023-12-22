@@ -5,36 +5,97 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ChessGame"
         mc:Ignorable="d"
-        Title="Chess" Width="600" SizeToContent="Height"
+        Title="Chess" Width="800" SizeToContent="Height"
         Icon="Assets/chess-logo.ico" WindowStartupLocation="CenterScreen"
         Background="#101010"
         KeyDown="Window_KeyDown">
+
     <Viewbox>
-        <Grid x:Name="BoardGrid"
-              Width="600"
-              Height="600"
-              MouseDown="BoardGrid_MouseDown">
-            <Grid.Background>
-                <ImageBrush ImageSource="Assets/Board.png"/>
-            </Grid.Background>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="600"/>
+                <ColumnDefinition Width="200"/>
+            </Grid.ColumnDefinitions>
 
-            <UniformGrid x:Name="HighlightGrid"
-                         Rows="8"
-                         Columns="8">
+            <Viewbox Grid.Column="0">
+                <Grid x:Name="BoardGrid"
+                      Width="600"
+                      Height="600"
+                      MouseDown="BoardGrid_MouseDown">
+                    <Grid.Background>
+                        <ImageBrush ImageSource="Assets/chessboard.png"/>
+                    </Grid.Background>
 
-            </UniformGrid>
+                    <UniformGrid x:Name="HighlightGrid"
+                 Rows="8"
+                 Columns="8">
 
-            <UniformGrid x:Name="PieceGrid"
-                         Rows="8"
-                         Columns="8"
-                         RenderOptions.BitmapScalingMode="HighQuality">
+                    </UniformGrid>
 
-            </UniformGrid>
-            
+                    <UniformGrid x:Name="PieceGrid"
+                 Rows="8"
+                 Columns="8"
+                 RenderOptions.BitmapScalingMode="HighQuality">
 
-            <ContentControl x:Name="MenuContainer"/>
+                    </UniformGrid>
+                    <ContentControl x:Name="MenuContainer"/>
+                </Grid>
+
+            </Viewbox>
+
+            <Viewbox Grid.Column="1">
+                <Grid x:Name="ChatGrid"
+                  Width="200"
+                  Height="600"
+                  Background="#262522">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Button Content="Resign"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Top"
+                        Height="40"
+                        Margin="10,10,10,0"
+                        Background="#0d0b06"
+                        Foreground="#00d97e"
+                        Click="ResignButton_Click"
+                        BorderThickness="0"
+                        Grid.Row="0"
+                        FontSize="18"/>
+
+                    <Button Content="Play Online"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Top"
+                        Height="40"
+                        Margin="10,10,10,0"
+                        Background="#0d0b06"
+                        Foreground="#00d97e"
+                        Click="ResignButton_Click"
+                        BorderThickness="0"
+                        Grid.Row="1"
+                        FontSize="18"/>
+
+                    <StackPanel Grid.Row="2"
+                                Background="#262522">
+                        <ListView Height="450"
+                                  Background="#262522"/>
+                        <StackPanel Orientation="Horizontal"
+                                    Background="#262522">
+                            <TextBox Height="50"
+                                     Width="150"
+                                    VerticalAlignment="Center"
+                                     Background="#262522"/>
+                            <Button Width="50"
+                                    Content="Send"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                </Grid>
+            </Viewbox>
         </Grid>
-    
     </Viewbox>
-    
 </Window>

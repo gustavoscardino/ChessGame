@@ -20,6 +20,10 @@ namespace ChessGameLogic.board
         {
             return new Result(winner, EndReason.Checkmate);
         }
+        public static Result Resign(Color winner)
+        {
+            return new Result(winner, EndReason.Resign);
+        }
         public static Result Draw(EndReason reason)
         {
             return new Result(Color.None, reason);

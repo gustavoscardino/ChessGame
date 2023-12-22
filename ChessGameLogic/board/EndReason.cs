@@ -12,6 +12,7 @@ namespace ChessGameLogic.board
         Stalemate,
         FiftyMoveRule,
         InsufficientMaterial,
-        ThreefoldRepetition
+        ThreefoldRepetition,
+        Resign
     }
 }

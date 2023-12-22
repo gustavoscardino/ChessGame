@@ -1,7 +1,7 @@
 ﻿
 using System.Windows;
 using System.Windows.Controls;
-
+using ChessGame.GameFeats;
 using ChessGameLogic.board;
 using ChessGameLogic.chess;
 
@@ -52,6 +52,7 @@ namespace ChessGame
                 EndReason.FiftyMoveRule =>  "FIFTY-MOVE RULE",
                 EndReason.InsufficientMaterial=> "INSUFFICIENT MATERIAL",
                 EndReason.ThreefoldRepetition=> "THREEFOLD REPETITION",
+                EndReason.Resign=> $"{PLayerString(ChessMatch.opponent(currentplayer))} RESIGNED",
                 _ => ""
             };
 

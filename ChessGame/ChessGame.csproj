@@ -13,6 +13,7 @@
     <None Remove="Assets\BishopW.png" />
     <None Remove="Assets\Board.png" />
     <None Remove="Assets\chess-logo.ico" />
+    <None Remove="Assets\chessboard.png" />
     <None Remove="Assets\CursorB.cur" />
     <None Remove="Assets\CursorW.cur" />
     <None Remove="Assets\KingB.png" />
@@ -36,6 +37,7 @@
     <Resource Include="Assets\BishopW.png" />
     <Resource Include="Assets\Board.png" />
     <Resource Include="Assets\chess-logo.ico" />
+    <Resource Include="Assets\chessboard.png" />
     <Resource Include="Assets\CursorB.cur" />
     <Resource Include="Assets\CursorW.cur" />
     <Resource Include="Assets\KingB.png" />
@@ -48,6 +50,10 @@
     <Resource Include="Assets\QueenW.png" />
     <Resource Include="Assets\RookB.png" />
     <Resource Include="Assets\RookW.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="MVVM\View\" />
   </ItemGroup>
 
 </Project>

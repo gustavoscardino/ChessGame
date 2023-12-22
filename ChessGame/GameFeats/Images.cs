@@ -3,7 +3,7 @@ using ChessGameLogic.board;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace ChessGame
+namespace ChessGame.GameFeats
 {
     public static class Images
     {

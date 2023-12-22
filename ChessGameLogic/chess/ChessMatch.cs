@@ -13,7 +13,7 @@ namespace ChessGameLogic.chess
         private HashSet<Piece> capturedPieces;
         public bool check { get; private set; }
         public Piece enPassantVulnerable { get; private set; }
-        public Result result { get; private set; }
+        public Result result { get; set; }
 
         public ChessMatch()
         {

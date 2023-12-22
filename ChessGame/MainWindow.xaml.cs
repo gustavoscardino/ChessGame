@@ -3,6 +3,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using ChessGame.GameFeats;
 using ChessGameLogic.board;
 using ChessGameLogic.chess;
 
@@ -120,7 +121,7 @@ namespace ChessGame
 
         private void ShowHighLights(Position origin)
         {
-            System.Windows.Media.Color color = System.Windows.Media.Color.FromArgb(128, 144, 238, 144);
+            System.Windows.Media.Color color = System.Windows.Media.Color.FromArgb(192, 255, 144, 144);
 
             bool[,] possibleMoves = chessMatch.board.piece(origin). TestPossibleMoves(chessMatch);
 
@@ -222,6 +223,13 @@ namespace ChessGame
                     RestartGame();
                 }
             };
+        }
+
+        private void ResignButton_Click(object sender, RoutedEventArgs e)
+        {
+            Result result = Result.Resign(ChessMatch.opponent(chessMatch.currentPlayer));
+            chessMatch.result = result;
+            ShowGameOver();
         }
     }
 }
