@@ -1,4 +1,8 @@
 # ChessGame <img src="./ChessGame/Assets/chess-logo.ico" alt="Chess" width="50" height="50"> 
+
+<img align="right" width="300" height="300" src="./ChessGame/Assets/photo.png">
+
+
 **Chess Game** is a implementation of the **classic chess game**, developed using C# and the WPF framework in Visual Studio. Leveraging the power of the .NET platform, this project provides a rich user interface and a robust set of features for an immersive chess-playing experience.
 
 ### Technical Features
