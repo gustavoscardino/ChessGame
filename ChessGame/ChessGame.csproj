@@ -52,8 +52,4 @@
     <Resource Include="Assets\RookW.png" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="MVVM\View\" />
-  </ItemGroup>
-
 </Project>

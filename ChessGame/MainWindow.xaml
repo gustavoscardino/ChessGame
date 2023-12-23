@@ -3,12 +3,16 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ChessGame"
+        xmlns:local="clr-namespace:ChessGame" xmlns:viewmodel="clr-namespace:ChessGame.MVVM.ViewModel"
         mc:Ignorable="d"
         Title="Chess" Width="800" SizeToContent="Height"
         Icon="Assets/chess-logo.ico" WindowStartupLocation="CenterScreen"
         Background="#101010"
         KeyDown="Window_KeyDown">
+
+    <Window.DataContext>
+        <viewmodel:MainViewModel/>
+    </Window.DataContext>
 
     <Viewbox>
         <Grid>
@@ -50,28 +54,31 @@
                   Background="#262522">
 
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="25"/>
                         <RowDefinition Height="50"/>
                         <RowDefinition Height="50"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
+                    <TextBox Grid.Row="0"
+                              Height="25"
+                             Text="Username:"
+                              Background="#0d0b06"
+                              BorderThickness="0"
+                              Foreground="Green"
+                              Margin="0,0,140,0"/>
+                    <TextBox Grid.Row="0"
+                             Height="25"
+                            Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"
+                             Background="#0d0b06"
+                             BorderThickness="0"
+                             Foreground="Green"
+                             Margin="60,0,0,0"/>
 
                     <Button Content="Resign"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Top"
                         Height="40"
-                        Margin="10,10,10,0"
-                        Background="#0d0b06"
-                        Foreground="#00d97e"
-                        Click="ResignButton_Click"
-                        BorderThickness="0"
-                        Grid.Row="0"
-                        FontSize="18"/>
-
-                    <Button Content="Play Online"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Top"
-                        Height="40"
-                        Margin="10,10,10,0"
+                        Margin="5,10,5,0"
                         Background="#0d0b06"
                         Foreground="#00d97e"
                         Click="ResignButton_Click"
@@ -79,21 +86,81 @@
                         Grid.Row="1"
                         FontSize="18"/>
 
-                    <StackPanel Grid.Row="2"
+                        <Grid Grid.Row="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Button Content="Play Solo"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Top"
+                                Height="40"
+                                Margin="5,10,5,0"
+                                Background="#0d0b06"
+                                Foreground="#00d97e"
+                                Click="PlaySoloButton_Click"
+                                BorderThickness="0"
+                                Grid.Column="0"
+                                FontSize="9"/>
+                            <Button Content="Play Online"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Top"
+                                Height="40"
+                                Margin="5,10,5,0"
+                                Background="#0d0b06"
+                                Foreground="#00d97e"
+                                Click="PlayOnlineButton_Click"
+                                BorderThickness="0"
+                                Grid.Column="1"
+                                FontSize="9"
+                                Command="{Binding ConnectToServerCommand}"/>
+                            <Button Content="Play vs AI"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Top"
+                                Height="40"
+                                Margin="5,10,5,0"
+                                Background="#0d0b06"
+                                Foreground="#00d97e"
+                                Click="PlayAIButton_Click"
+                                BorderThickness="0"
+                                Grid.Column="2"
+                                FontSize="9"/>
+                        </Grid>
+
+
+                    <StackPanel Grid.Row="3"
                                 Background="#262522">
-                        <ListView Height="450"
-                                  Background="#262522"/>
+                        <ListView Height="50"
+                                  Background="#262522"
+                                    ItemsSource="{Binding Users}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Username}"
+                                               Foreground="Green"/>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                        
+                        <ListView Height="375"
+                                  Background="#262522"
+                                  ItemsSource="{Binding Messages}"
+                                  Foreground="Green">
+                        </ListView>
+                        
                         <StackPanel Orientation="Horizontal"
                                     Background="#262522">
                             <TextBox Height="50"
                                      Width="150"
                                     VerticalAlignment="Center"
-                                     Background="#262522"/>
+                                     Background="#262522"
+                                         Foreground="Green"
+                                     Text="{Binding Message, UpdateSourceTrigger=PropertyChanged}"/>
                             <Button Width="50"
-                                    Content="Send"/>
+                                    Content="Send"
+                                     Command="{Binding SendMessageCommand}"/>
                         </StackPanel>
                     </StackPanel>
-
                 </Grid>
             </Viewbox>
         </Grid>

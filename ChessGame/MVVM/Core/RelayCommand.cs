@@ -7,7 +7,7 @@ namespace ChessGame.MVVM.Core
         private Action<object> execute;
         private Func<object, bool> canExecute;
 
-        public event EventHandler CanExecuteChanged
+        public event EventHandler CanExecuteChanged 
         {
             add { CommandManager.RequerySuggested += value; }
             remove { CommandManager.RequerySuggested -= value; }
@@ -21,7 +21,7 @@ namespace ChessGame.MVVM.Core
 
         public void Execute(object parameter)
         {
-            this.Execute(parameter);
+            this.execute(parameter);
         }
 
         public bool CanExecute(object parameter)

@@ -231,5 +231,20 @@ namespace ChessGame
             chessMatch.result = result;
             ShowGameOver();
         }
+
+        private void PlaySoloButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void PlayOnlineButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void PlayAIButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
